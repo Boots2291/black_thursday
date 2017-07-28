@@ -105,4 +105,15 @@ class SalesAnalystTest < Minitest::Test
     assert_equal Array, target.class
     assert_equal 1, target.count
   end
+
+  def test_for_average_invoices_per_merchant
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.average_invoices_per_merchant
+
+    assert_equal 1.0, target
+  end
 end

@@ -114,4 +114,7 @@ class SalesAnalyst
     gold_items
   end
 
+  def average_invoices_per_merchant
+    (@se.call_invoices.count.to_f / @se.call_merchants.count.to_f).round(2)
+  end
 end

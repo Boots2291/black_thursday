@@ -52,4 +52,8 @@ class SalesEngine
     @items.items
   end
 
+  def call_invoices
+    @invoices.invoices
+  end
+
 end
