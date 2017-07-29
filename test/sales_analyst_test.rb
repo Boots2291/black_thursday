@@ -116,4 +116,52 @@ class SalesAnalystTest < Minitest::Test
 
     assert_equal 1.0, target
   end
+
+  def test_for_average_invoices_per_merchant_standard_deviation
+    skip
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.average_invoices_per_merchant_standard_deviation
+
+    assert_equal 123, target
+  end
+
+  def test_for_merchants_with_high_invoice_counts
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.top_merchants_by_invoice_count
+
+    assert_equal Array, target.class
+    assert_equal 12, target.count
+  end
+
+  def test_for_merchants_with_low_invoice_counts
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.bottom_merchants_by_invoice_count
+
+    assert_equal Array, target.class
+    assert_equal 4, target.count
+  end
+
+  def test_it_can_return_top_days_by_invoice_count
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.top_days_by_invoice_count
+
+    assert_equal ["Friday", "Monday"], target
+  end
+
 end
