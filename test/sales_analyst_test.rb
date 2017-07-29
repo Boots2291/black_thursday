@@ -164,4 +164,19 @@ class SalesAnalystTest < Minitest::Test
     assert_equal ["Friday", "Monday"], target
   end
 
+  def test_it_can_return_invoice_status
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target_1 = sa.invoice_status(:pending)
+    target_2 = sa.invoice_status(:shipped)
+    target_3 = sa.invoice_status(:returned)
+
+    assert_equal 54.55, target_1
+    assert_equal 36.36, target_2
+    assert_equal 9.09, target_3
+  end
+
 end

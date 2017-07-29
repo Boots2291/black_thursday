@@ -67,4 +67,15 @@ class SalesEngine
     end
   end
 
+  def invoices_by_status
+    invoices.all.reduce({}) do |status, invoice|
+      if status.has_key?(invoice.status.to_sym)
+        status[invoice.status.to_sym] += 1
+      else
+        status[invoice.status.to_sym] = 1
+      end
+      status
+    end
+  end
+
 end

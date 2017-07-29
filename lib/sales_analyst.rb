@@ -119,6 +119,11 @@ class SalesAnalyst
     end
   end
 
+  def invoice_status(status)
+    total_invoices = @se.call_invoices.count
+    ((@se.invoices_by_status[status].to_f / total_invoices) * 100.0).round(2)
+  end
+
 end
 
 
