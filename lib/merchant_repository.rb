@@ -1,7 +1,10 @@
 require_relative 'merchant'
+require_relative 'loader'
 require 'pry'
 
 class MerchantRepository
+
+  include Loader
 
   attr_reader :merchants,
               :se
@@ -9,17 +12,8 @@ class MerchantRepository
   def initialize(merchants_file_path, se)
     @se = se
     @merchants = []
-    contents = CSV.open merchants_file_path,
-                 headers: true,
-                 header_converters: :symbol
-    contents.each do |row|
-      id = (row[:id]).to_i
-      name = row[:name]
-      created_at = row[:created_at]
-      updated_at = row[:updated_at]
-      merchant = Merchant.new(id, name, created_at, updated_at, self)
-      @merchants << merchant
-    end
+    @merchants_file_path = merchants_file_path
+    load_merchants(merchants_file_path, se)
   end
 
   def all
@@ -55,4 +49,5 @@ class MerchantRepository
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end
+  
 end

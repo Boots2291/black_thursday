@@ -1,4 +1,5 @@
 module Calculator
+  
   def number_of_items_per_merchant
     @se.call_merchants.map do |merchant_obj|
       merchant_id = merchant_obj.id

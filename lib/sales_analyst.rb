@@ -102,12 +102,6 @@ class SalesAnalyst
     sqrt(squares.sum / 6).round(2)
   end
 
-  # def average_invoices_per_merchant_standard_deviation
-  #   merchant_invoices = number_of_invoices_per_merchant
-  #   squares = get_squares_invoices(merchant_invoices)
-  #   sqrt(squares.sum / (@se.call_merchants.count.to_f - 1)).round(2)
-  # end
-
   def top_days_by_invoice_count
     top_days = []
     standard_deviation = invoice_per_day_standard_deviation

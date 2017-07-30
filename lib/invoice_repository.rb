@@ -1,27 +1,18 @@
 require_relative 'invoice'
+require_relative 'loader'
 
 class InvoiceRepository
+
+  include Loader
+
   attr_reader :invoices,
               :se
 
   def initialize(invoice_file_path, se)
     @se = se
+    @invoice_file_path = invoice_file_path
     @invoices = []
-    contents = CSV.open invoice_file_path,
-                 headers: true,
-                 header_converters: :symbol
-    contents.each do |row|
-      id = (row[:id]).to_i
-      customer_id = (row[:customer_id]).to_i
-      status = (row[:status]).to_sym
-      created_at = row[:created_at]
-      updated_at = row[:updated_at]
-      merchant_id = (row[:merchant_id]).to_i
-      invoice = Invoice.new(id, customer_id, status,
-                            created_at, updated_at,
-                            merchant_id, self)
-      @invoices << invoice
-    end
+    load_invoices(invoice_file_path, se)
   end
 
   def all
