@@ -1,8 +1,5 @@
 require_relative 'invoice'
-<<<<<<< HEAD
-=======
 require_relative 'loader'
->>>>>>> refactor
 
 class InvoiceRepository
 
