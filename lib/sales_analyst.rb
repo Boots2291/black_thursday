@@ -200,16 +200,16 @@ class SalesAnalyst
     end.sum
   end
 
+  def revenue_by_merchant(merchant_id)
+    invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
+    invoice_items = iterate_invoices(invoices)
+    sum_invoice_items(invoice_items)
+  end
+
+  def iterate_invoices(invoice_collection)
+    invoice_collection.map do |invoice|
+      @se.invoice_items.find_all_by_invoice_id(invoice.id)
+    end
+  end
+
 end
-
-
-
-
-
-
-
-
-
-
-
-
