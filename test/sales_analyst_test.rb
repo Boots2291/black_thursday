@@ -132,4 +132,96 @@ class SalesAnalystTest < Minitest::Test
     assert_equal Array, target.class
     assert_equal 1, target.count
   end
+
+  def test_for_average_invoices_per_merchant
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.average_invoices_per_merchant
+
+    assert_equal 1.0, target
+  end
+
+  def test_for_average_invoices_per_merchant_standard_deviation
+    skip
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.average_invoices_per_merchant_standard_deviation
+
+    assert_equal 123, target
+  end
+
+  def test_for_merchants_with_high_invoice_counts
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.top_merchants_by_invoice_count
+
+    assert_equal Array, target.class
+    assert_equal 12, target.count
+  end
+
+  def test_for_merchants_with_low_invoice_counts
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.bottom_merchants_by_invoice_count
+
+    assert_equal Array, target.class
+    assert_equal 4, target.count
+  end
+
+  def test_it_can_return_top_days_by_invoice_count
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.top_days_by_invoice_count
+
+    assert_equal ["Friday", "Monday"], target
+  end
+
+  def test_it_can_return_invoice_status
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',,
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target_1 = sa.invoice_status(:pending)
+    target_2 = sa.invoice_status(:shipped)
+    target_3 = sa.invoice_status(:returned)
+
+    assert_equal 54.55, target_1
+    assert_equal 36.36, target_2
+    assert_equal 9.09, target_3
+  end
+
 end

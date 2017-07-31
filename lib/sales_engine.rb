@@ -119,4 +119,30 @@ class SalesEngine
     @items.items
   end
 
+  def call_invoices
+    @invoices.invoices
+  end
+
+  def invoices_per_day
+    call_invoices.reduce({}) do |days, invoice|
+      if days.has_key?(invoice.created_at.strftime('%A'))
+        days[invoice.created_at.strftime('%A')] += 1
+      else
+        days[invoice.created_at.strftime('%A')] = 1
+      end
+      days
+    end
+  end
+
+  def invoices_by_status
+    invoices.all.reduce({}) do |status, invoice|
+      if status.has_key?(invoice.status.to_sym)
+        status[invoice.status.to_sym] += 1
+      else
+        status[invoice.status.to_sym] = 1
+      end
+      status
+    end
+  end
+
 end

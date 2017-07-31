@@ -181,6 +181,7 @@ class SalesEngineTest < Minitest::Test
     assert_equal "CenTexCustomCoatings", target.name
   end
 
+<<<<<<< HEAD
   def test_it_creates_an_invoice_item_repository
     se = SalesEngine.from_csv({:items => './data/items_short.csv',
                                :merchants => './data/merchants_short.csv',
@@ -385,4 +386,19 @@ class SalesEngineTest < Minitest::Test
     assert_equal 2, invoice.invoice_items.count
   end
 
+  def test_it_can_return_invoices_per_weekday
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+
+    target = se.invoices_per_day
+    expected = {"Saturday"=>2, "Friday"=>4, "Wednesday"=>1,
+                "Monday"=>3, "Sunday"=>1}
+
+    assert_instance_of Hash, target
+    assert_equal expected, target
+  end
 end

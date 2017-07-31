@@ -1,29 +1,19 @@
 require_relative 'item'
+require_relative 'loader'
 require 'pry'
 
 class ItemRepository
+
+  include Loader
 
   attr_reader :items,
               :se
 
   def initialize(items_file_path, se)
     @se = se
+    @items_file_path = items_file_path
     @items = []
-    contents = CSV.open items_file_path,
-                 headers: true,
-                 header_converters: :symbol
-    contents.each do |row|
-      id = (row[:id]).to_i
-      name = row[:name]
-      description = row[:description]
-      unit_price = row[:unit_price]
-      created_at = row[:created_at]
-      updated_at = row[:updated_at]
-      merchant_id = (row[:merchant_id]).to_i
-      item = Item.new(id, name, description, unit_price,
-                     created_at, updated_at, merchant_id, self)
-      @items << item
-    end
+    load_items(items_file_path, se)
   end
 
   def all
