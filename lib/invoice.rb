@@ -24,7 +24,6 @@ class Invoice
     inr.fetch_merchant_from_invoice_id(merchant_id)
   end
 
-<<<<<<< HEAD
   def items
     inr.fetch_items_from_invoice_id(id)
   end
