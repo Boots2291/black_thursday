@@ -148,7 +148,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_for_average_invoices_per_merchant_standard_deviation
-    skip
     se = SalesEngine.from_csv({:items => './data/items.csv',
                                :merchants => './data/merchants.csv',
                                :invoices => './data/invoices.csv',
@@ -159,7 +158,7 @@ class SalesAnalystTest < Minitest::Test
 
     target = sa.average_invoices_per_merchant_standard_deviation
 
-    assert_equal 123, target
+    assert_equal 3.29, target
   end
 
   def test_for_merchants_with_high_invoice_counts
@@ -203,25 +202,25 @@ class SalesAnalystTest < Minitest::Test
 
     target = sa.top_days_by_invoice_count
 
-    assert_equal ["Friday", "Monday"], target
+    assert_equal ["Friday"], target
   end
 
   def test_it_can_return_invoice_status
-    se = SalesEngine.from_csv({:items => './data/items_short.csv',
-                               :merchants => './data/merchants_short.csv',
-                               :invoices => './data/invoices_short.csv',,
-                               :invoice_items => './data/invoice_items_short.csv',
-                               :transactions => './data/transactions_short.csv',
-                               :customers => './data/customers_short.csv'})
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
     sa = SalesAnalyst.new(se)
 
     target_1 = sa.invoice_status(:pending)
     target_2 = sa.invoice_status(:shipped)
     target_3 = sa.invoice_status(:returned)
 
-    assert_equal 54.55, target_1
-    assert_equal 36.36, target_2
-    assert_equal 9.09, target_3
+    assert_equal 29.55, target_1
+    assert_equal 56.95, target_2
+    assert_equal 13.5, target_3
   end
 
 end

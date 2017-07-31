@@ -394,8 +394,8 @@ class SalesEngineTest < Minitest::Test
                                :customers => './data/customers_short.csv'})
 
     target = se.invoices_per_day
-    expected = {"Saturday"=>2, "Friday"=>4, "Wednesday"=>1,
-                "Monday"=>3, "Sunday"=>1}
+    expected = {"Saturday"=>2, "Friday"=>5, "Wednesday"=>1,
+                "Monday"=>3, "Sunday"=>2}
 
     assert_instance_of Hash, target
     assert_equal expected, target
