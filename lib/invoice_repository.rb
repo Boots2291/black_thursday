@@ -1,5 +1,4 @@
 require_relative 'invoice'
-# require 'csv'
 
 class InvoiceRepository
   attr_reader :invoices,
@@ -55,6 +54,22 @@ class InvoiceRepository
 
   def fetch_merchant_from_invoice_id(merchant_id)
     se.fetch_merchant_from_invoice_id(merchant_id)
+  end
+
+  def fetch_items_from_invoice_id(invoice_id)
+    se.fetch_items_from_invoice_id(invoice_id)
+  end
+
+  def fetch_transactions_from_invoice_id(invoice_id)
+    se.fetch_transactions_from_invoice_id(invoice_id)
+  end
+
+  def fetch_customer_from_invoice_id(customer_id)
+    se.fetch_customer_from_invoice_id(customer_id)
+  end
+
+  def fetch_invoice_items_from_invoice_id(invoice_id)
+    se.fetch_invoice_items_from_invoice_id(invoice_id)
   end
 
   def inspect
