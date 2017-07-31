@@ -223,4 +223,19 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 13.5, target_3
   end
 
+  def test_it_can_return_total_revenue_by_date
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.total_revenue_by_date(Time.parse("2009-02-07"))
+
+    assert_equal BigDecimal.new("2106777".insert(-3, ".")), target
+  end
+
+
 end

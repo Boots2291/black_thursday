@@ -118,6 +118,34 @@ class SalesAnalyst
     ((@se.invoices_by_status[status].to_f / total_invoices) * 100.0).round(2)
   end
 
+  def total_revenue_by_date(date)
+    invoices_on_date = get_invoices_on_date(date)
+    invoice_ids = get_invoice_ids(invoices_on_date)
+    invoice_items = @se.fetch_invoice_items_with_invoice_id(invoice_ids.uniq)
+    sum_invoice_items(invoice_items)
+  end
+
+  def get_invoices_on_date(date)
+    @se.call_invoices.find_all do |invoice|
+      invoice.created_at.strftime("%Y-%m-%d") == date.strftime("%Y-%m-%d")
+    end
+  end
+
+  def get_invoice_ids(invoices_on_date)
+    invoices_on_date.map do |invoice|
+      invoice.id
+    end
+  end
+
+  def sum_invoice_items(invoice_items)
+    invoice_items[0].map do |item|
+      (item.unit_price * item.quantity.to_i)
+    end.sum
+  end
+
+
+
+
 end
 
 

@@ -145,4 +145,10 @@ class SalesEngine
     end
   end
 
+  def fetch_invoice_items_with_invoice_id(invoice_array)
+    invoice_array.map do |invoice_id|
+      invoice_items.find_all_by_invoice_id(invoice_id)
+    end
+  end
+
 end
