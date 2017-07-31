@@ -143,8 +143,66 @@ class SalesAnalyst
     end.sum
   end
 
+  def top_revenue_earners(x = 20)
+    #grab merchant id
+    #grab invoice_id for each merchant
+    #invoice_id to find invoice_items
+    #sum for each merchant
+    #sort merchants by rev
+    #top x merchants
+    merchant_ids = @se.call_merchants.map do |merchant|
+      merchant.id
+    end
+    merchant_invoice_hash = {}
+    merchant_ids.each do |merchant_id|
+      merchant_invoice_hash[merchant_id] =
+      @se.invoices.find_all_by_merchant_id(merchant_id)
+    end # this returns hash merchant key to all invoices value
+    new_hash = {}
+    merchant_invoice_hash.each do |merchant_id, invoice_array|
+      new_hash[merchant_id] = hash_converter(invoice_array)
+    end
+    binding.pry
+  end
 
+  def hash_converter(invoice_array)
+    invoice_ids = get_invoice_ids_from_array(invoice_array)
+    invoice_items = get_invoice_items(invoice_ids)
+    sum_prices(invoice_items)
+  end
 
+  def get_invoice_ids_from_array(invoice_array)
+    invoice_array.map do |invoice|
+      invoice.id
+    end
+  end
+
+  def get_invoice_items(invoice_ids_array)
+    invoice_ids_array.map do |invoice_id|
+      @se.invoices.fetch_invoice_items_from_invoice_id(invoice_id)
+    end
+  end
+
+  def sum_prices(invoice_items_array)
+    invoice_items_array.map do |invoice_item_array|
+      iterate_invoice_items(invoice_item_array)
+    end.sum
+  end
+
+  def iterate_invoice_items(invoice_item_array)
+    invoice_item_array.map do |invoice_item|
+      (invoice_item.unit_price * invoice_item.quantity.to_i)
+    end.sum
+  end
+
+  # invoice_items = invoices.map do |invoice_array|
+  #   invoice_array.map do |invoice|
+  #     @se.invoices.fetch_invoice_items_from_invoice_id(invoice.id)
+  #   end
+  # end # array of invoice items nested 3 times
+  # invoice_items.map do |invoice_item|
+  #   (invoice_item.unit_price * invoice_item.quantity.to_i)
+  # end.sum
 
 end
 
