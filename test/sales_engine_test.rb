@@ -181,7 +181,6 @@ class SalesEngineTest < Minitest::Test
     assert_equal "CenTexCustomCoatings", target.name
   end
 
-<<<<<<< HEAD
   def test_it_creates_an_invoice_item_repository
     se = SalesEngine.from_csv({:items => './data/items_short.csv',
                                :merchants => './data/merchants_short.csv',
