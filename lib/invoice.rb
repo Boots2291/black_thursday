@@ -57,6 +57,3 @@ class Invoice
     prices.sum
   end
 end
-=======
-end
->>>>>>> refactor
