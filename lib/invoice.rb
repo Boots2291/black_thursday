@@ -24,4 +24,36 @@ class Invoice
     inr.fetch_merchant_from_invoice_id(merchant_id)
   end
 
+  def items
+    inr.fetch_items_from_invoice_id(id)
+  end
+
+  def transactions
+    inr.fetch_transactions_from_invoice_id(id)
+  end
+
+  def customer
+    inr.fetch_customer_from_invoice_id(customer_id)
+  end
+
+  def invoice_items
+    inr.fetch_invoice_items_from_invoice_id(id)
+  end
+
+  def is_paid_in_full?
+    trans = transactions
+    trans.any? do |transaction|
+      transaction.result == "success"
+    end
+  end
+
+  def total
+    inv_items = invoice_items
+    prices = inv_items.map do |invoice_item|
+      num = (invoice_item.quantity.to_i * invoice_item.unit_price)
+      BigDecimal.new(num)
+    end
+    prices.sum
+  end
+
 end
