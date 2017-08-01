@@ -252,7 +252,7 @@ class SalesAnalyst
 
   def most_sold_item_for_merchant(merchant_id)
     invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
-    valid_invoices = check_transactions(invoices)
+    valid_invoices = get_valid_invoices(invoices)
     invoice_items = iterate_invoices(valid_invoices)
     item_ids = get_items_from_array(invoice_items).flatten
     hash = get_hash(item_ids)
@@ -308,7 +308,7 @@ class SalesAnalyst
 
   def best_item_for_merchant(merchant_id)
     invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
-    valid_invoices = check_transactions(invoices)
+    valid_invoices = get_valid_invoices(invoices)
     invoice_items = iterate_invoices(valid_invoices).flatten
     revenue_hash = create_revenue_hash(invoice_items)
     get_max_revenue(revenue_hash)
@@ -336,24 +336,14 @@ class SalesAnalyst
     @se.items.find_by_id(revenue_array[0])
   end
 
-  def check_transactions(invoices)
+  def get_valid_invoices(invoices)
     valid = []
     invoices.each do |invoice|
-      transactions = get_transactions(invoice.id)
-      if check_valid_transaction(transactions)
+      if invoice.is_paid_in_full?
         valid << invoice
       end
     end
     valid
   end
 
-  def check_valid_transaction(transactions)
-    transactions.any? do |transaction|
-      transaction.result == "success"
-    end
-  end
-
-  def get_transactions(id)
-    @se.transactions.find_all_by_invoice_id(id)
-  end
 end
