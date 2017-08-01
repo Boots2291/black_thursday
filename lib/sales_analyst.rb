@@ -244,8 +244,6 @@ class SalesAnalyst
     end
   end
 
-end
-
   def iterate_invoices(invoice_collection)
     invoice_collection.map do |invoice|
       @se.invoice_items.find_all_by_invoice_id(invoice.id)
@@ -268,11 +266,11 @@ end
     end
   end
 
-  # def revenue_by_merchant(merchant_id)
-  #   invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
-  #   invoice_items = iterate_invoices(invoices)
-  #   sum_invoice_items(invoice_items)
-  # end
+  def revenue_by_merchant(merchant_id)
+    invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
+    invoice_items = iterate_invoices(invoices)
+    sum_invoice_items(invoice_items)
+  end
 
   def get_item_ids(array)
     array.map do |invoice_item|
@@ -350,13 +348,12 @@ end
   end
 
   def check_valid_transaction(transactions)
-  transactions.any? do |transaction|
-    transaction.result == "success"
-  end
+    transactions.any? do |transaction|
+      transaction.result == "success"
+    end
   end
 
   def get_transactions(id)
     @se.transactions.find_all_by_invoice_id(id)
   end
-
 end
