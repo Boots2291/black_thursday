@@ -212,4 +212,53 @@ class SalesAnalyst
     end
   end
 
+  def most_sold_item_for_merchant(merchant_id)
+    invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
+    invoice_items = iterate_invoices(invoices)
+    item_ids = get_items_from_array(invoice_items).flatten
+    hash = get_hash(item_ids)
+    items = get_max(hash)
+    get_items(items)
+  end
+
+  def get_items_from_array(invoice_items_array)
+    invoice_items_array.map do |array|
+      get_item_ids(array)
+    end
+  end
+
+  def get_item_ids(array)
+    array.map do |invoice_item|
+      invoice_item.item_id
+    end
+  end
+
+  def get_hash(item_ids)
+    count = {}
+    item_ids.each do |item_id|
+      if count.key?(item_id)
+        count[item_id] += 1
+      else
+      count[item_id] = 1
+      end
+    end
+    count
+  end
+
+  def get_max(hash)
+    max = hash.values.max
+    items_with_count = hash.find_all do |item_id, count|
+      count == max
+    end
+    items_with_count.map do |array|
+      array[0]
+    end
+  end
+
+  def get_items(items)
+    items.map do |id|
+      @se.items.find_by_id(id)
+    end
+  end
+
 end
