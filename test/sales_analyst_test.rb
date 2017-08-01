@@ -237,5 +237,66 @@ class SalesAnalystTest < Minitest::Test
     assert_equal BigDecimal.new("2106777".insert(-3, ".")), target
   end
 
+  def test_it_can_return_top_earners
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.top_revenue_earners(5)
+    target_1 = sa.top_revenue_earners(1)
+    merchant = se.merchants.find_by_id(12334105)
+
+    assert_equal 5, target.count
+    assert_equal [merchant], target_1
+
+  end
+
+  def test_it_can_return_total_revenue_for_single_merchant
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.revenue_by_merchant(12334753)
+
+    assert_equal BigDecimal.new("187274".insert(-3, ".")), target
+  end
+
+  def test_it_knows_what_item_merchant_sold_the_most_of
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.most_sold_item_for_merchant(12334753)
+    item = se.items.find_by_id(263532842)
+
+    assert_equal [item], target
+  end
+
+  def test_it_knows_what_item_had_the_most_revenue_for_each_merchant
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.best_item_for_merchant(12334753)
+    item = se.items.find_by_id(263409515)
+
+    assert_equal item, target
+  end
 
 end

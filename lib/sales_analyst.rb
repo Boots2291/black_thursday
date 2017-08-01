@@ -244,16 +244,105 @@ class SalesAnalyst
     end
   end
 
+  def iterate_invoices(invoice_collection)
+    invoice_collection.map do |invoice|
+      @se.invoice_items.find_all_by_invoice_id(invoice.id)
+    end
+  end
+
+  def most_sold_item_for_merchant(merchant_id)
+    invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
+    valid_invoices = get_valid_invoices(invoices)
+    invoice_items = iterate_invoices(valid_invoices).flatten
+    item_ids = get_items_from_array(invoice_items)
+    hash = get_hash(item_ids)
+    items = get_max(hash)
+    get_items(items)
+  end
+
+  def get_items_from_array(invoice_items_array)
+    new_array = []
+    invoice_items_array.each do |invoice_item|
+      num = invoice_item.quantity.to_i
+      num.times do
+        new_array << invoice_item.item_id
+      end
+    end
+    new_array
+  end
+
+  def revenue_by_merchant(merchant_id)
+    invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
+    invoice_items = iterate_invoices(invoices)
+    sum_invoice_items(invoice_items)
+  end
+
+  def get_hash(item_ids)
+    count = {}
+    item_ids.each do |item_id|
+      if count.key?(item_id)
+        count[item_id] += 1
+      else
+      count[item_id] = 1
+      end
+    end
+    count
+  end
+
+  def get_max(hash)
+    max = hash.values.max
+    items_with_count = hash.find_all do |item_id, count|
+      count == max
+    end
+    items_with_count.map do |array|
+      array[0]
+    end
+  end
+
+  def get_items(items)
+    items.map do |id|
+      @se.items.find_by_id(id)
+    end
+  end
+
+  def best_item_for_merchant(merchant_id)
+    invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
+    valid_invoices = get_valid_invoices(invoices)
+    invoice_items = iterate_invoices(valid_invoices).flatten
+    revenue_hash = create_revenue_hash(invoice_items)
+    get_max_revenue(revenue_hash)
+  end
+
+  def create_revenue_hash(invoice_items)
+    revenue_hash = {}
+    invoice_items.each do |invoice_item|
+      id = invoice_item.item_id
+      revenue = (invoice_item.quantity.to_i * invoice_item.unit_price)
+      if revenue_hash.key?(id)
+        revenue_hash[id] += revenue
+      else
+        revenue_hash[id] = revenue
+      end
+    end
+    revenue_hash
+  end
+
+  def get_max_revenue(revenue_hash)
+    max = revenue_hash.values.max
+    revenue_array = revenue_hash.find do |item_id, revenue|
+      revenue == max
+    end
+    @se.items.find_by_id(revenue_array[0])
+  end
+
+  def get_valid_invoices(invoices)
+    valid = []
+    invoices.each do |invoice|
+      if invoice.is_paid_in_full?
+        valid << invoice
+      end
+    end
+    valid
+  end
+
 end
-
-
-
-
-
-
-
-
-
-
-
-
