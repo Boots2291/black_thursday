@@ -261,4 +261,33 @@ class SalesAnalyst
     end
   end
 
+  def best_item_for_merchant(merchant_id)
+    invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
+    invoice_items = iterate_invoices(invoices).flatten
+    revenue_hash = create_revenue_hash(invoice_items)
+    var = get_max_revenue(revenue_hash)
+  end
+
+  def create_revenue_hash(invoice_items)
+    revenue_hash = {}
+    invoice_items.each do |invoice_item|
+      id = invoice_item.item_id
+      revenue = (invoice_item.quantity.to_i * invoice_item.unit_price)
+      if revenue_hash.key?(id)
+        revenue_hash[id] += revenue
+      else
+        revenue_hash[id] = revenue
+      end
+    end
+    revenue_hash
+  end
+
+  def get_max_revenue(revenue_hash)
+    max = revenue_hash.values.max
+    revenue_array = revenue_hash.find do |item_id, revenue|
+      revenue == max
+    end
+    @se.items.find_by_id(revenue_array[0])
+  end
+
 end
