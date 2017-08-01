@@ -252,7 +252,66 @@ class SalesAnalystTest < Minitest::Test
 
     assert_equal 5, target.count
     assert_equal [merchant], target_1
+  end
 
+  def test_it_can_return_merchants_ranked_by_revenue
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.merchants_ranked_by_revenue
+
+    assert_equal 13, target.count
+    assert_instance_of Merchant, target[0]
+  end
+
+  def test_it_can_return_merchants_with_pending_invoices
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.merchants_with_pending_invoices
+
+    assert_equal 467, target.count
+    assert_instance_of Merchant, target[0]
+  end
+
+  def test_it_can_return_merchants_with_only_one_item
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.merchants_with_only_one_item
+
+    assert_equal 2, target.count
+    assert_instance_of Merchant, target[0]
+  end
+
+  def test_it_can_return_merchants_with_one_item_in_month
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.merchants_with_only_one_item_registered_in_month("June")
+
+    assert_equal 18, target.count
+    assert_instance_of Merchant, target[0]
   end
 
   def test_it_can_return_total_revenue_for_single_merchant
