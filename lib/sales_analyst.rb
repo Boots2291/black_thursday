@@ -253,29 +253,28 @@ class SalesAnalyst
   def most_sold_item_for_merchant(merchant_id)
     invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
     valid_invoices = get_valid_invoices(invoices)
-    invoice_items = iterate_invoices(valid_invoices)
-    item_ids = get_items_from_array(invoice_items).flatten
+    invoice_items = iterate_invoices(valid_invoices).flatten
+    item_ids = get_items_from_array(invoice_items)
     hash = get_hash(item_ids)
     items = get_max(hash)
     get_items(items)
   end
 
   def get_items_from_array(invoice_items_array)
-    invoice_items_array.map do |array|
-      get_item_ids(array)
+    new_array = []
+    invoice_items_array.each do |invoice_item|
+      num = invoice_item.quantity.to_i
+      num.times do
+        new_array << invoice_item.item_id
+      end
     end
+    new_array
   end
 
   def revenue_by_merchant(merchant_id)
     invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
     invoice_items = iterate_invoices(invoices)
     sum_invoice_items(invoice_items)
-  end
-
-  def get_item_ids(array)
-    array.map do |invoice_item|
-      invoice_item.item_id
-    end
   end
 
   def get_hash(item_ids)
