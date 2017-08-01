@@ -1,7 +1,7 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/customer_repository.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/customer_repository.rb": [
         1,
         1,
         null,
@@ -59,7 +59,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/customer.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/customer.rb": [
         1,
         1,
         null,
@@ -83,7 +83,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/invoice_item_repository.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/invoice_item_repository.rb": [
         1,
         1,
         1,
@@ -100,22 +100,6 @@
         55,
         55,
         55,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
         null,
         null,
         1,
@@ -146,7 +130,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/invoice_item.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/invoice_item.rb": [
         1,
         1,
         null,
@@ -176,7 +160,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/loader.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/loader.rb": [
         1,
         null,
         1,
@@ -269,7 +253,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/invoice_repository.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/invoice_repository.rb": [
         1,
         1,
         null,
@@ -341,7 +325,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/invoice.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/invoice.rb": [
         1,
         null,
         1,
@@ -402,7 +386,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/item_repository.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/item_repository.rb": [
         1,
         1,
         1,
@@ -427,7 +411,11 @@
         null,
         1,
         15,
+<<<<<<< HEAD
         7430,
+=======
+        7797,
+>>>>>>> 8998a104fe54e0c471127ddbe901c46491c8b660
         null,
         null,
         null,
@@ -466,13 +454,17 @@
         null,
         null,
         1,
+<<<<<<< HEAD
         0,
+=======
+        2,
+>>>>>>> 8998a104fe54e0c471127ddbe901c46491c8b660
         null,
         null,
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/item.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/item.rb": [
         1,
         1,
         null,
@@ -508,7 +500,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/merchant_repository.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/merchant_repository.rb": [
         1,
         1,
         1,
@@ -568,7 +560,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/merchant.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/merchant.rb": [
         1,
         1,
         null,
@@ -580,8 +572,8 @@
         7188,
         7188,
         7188,
-        7183,
-        7183,
+        7188,
+        7188,
         null,
         null,
         1,
@@ -597,7 +589,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/sales_engine.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/sales_engine.rb": [
         1,
         1,
         1,
@@ -757,7 +749,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/transaction_repository.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/transaction_repository.rb": [
         1,
         1,
         1,
@@ -774,23 +766,6 @@
         56,
         56,
         56,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
         null,
         null,
         1,
@@ -830,7 +805,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/transaction.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/transaction.rb": [
         1,
         1,
         null,
@@ -859,7 +834,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/sales_analyst.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/sales_analyst.rb": [
         1,
         1,
         1,
@@ -1128,6 +1103,12 @@
         42,
         42,
         215,
+<<<<<<< HEAD
+=======
+        null,
+        null,
+        1,
+>>>>>>> 8998a104fe54e0c471127ddbe901c46491c8b660
         null,
         null,
         1,
@@ -1137,11 +1118,16 @@
         1,
         1,
         1,
+<<<<<<< HEAD
         null,
         null,
         1,
         1,
         1,
+=======
+        1,
+        1,
+>>>>>>> 8998a104fe54e0c471127ddbe901c46491c8b660
         215,
         175,
         null,
@@ -1209,7 +1195,7 @@
         null,
         null
       ],
-      "/Users/Beckisrofe/turing/1module/projects/black_thursday/lib/calculator.rb": [
+      "/Users/mbutera/turing/1module/projects/black_thursday/lib/calculator.rb": [
         1,
         null,
         1,
@@ -1281,6 +1267,10 @@
         null
       ]
     },
+<<<<<<< HEAD
     "timestamp": 1501620755
+=======
+    "timestamp": 1501620643
+>>>>>>> 8998a104fe54e0c471127ddbe901c46491c8b660
   }
 }

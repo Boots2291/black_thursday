@@ -9,7 +9,7 @@ class Merchant
     @id = id
     @name = name
     @created_at = Time.parse(created_at)
-    @updated_at = updated_at
+    @updated_at = Time.parse(updated_at)
     @mr = mr
   end
 
