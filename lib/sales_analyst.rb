@@ -144,25 +144,45 @@ class SalesAnalyst
   end
 
   def top_revenue_earners(x = 20)
-    merchant_ids = @se.call_merchants.map do |merchant|
+    merchant_ids = get_merchant_ids
+    merchant_invoice_hash = {}
+    create_merchant_invoice_hash(merchant_ids, merchant_invoice_hash)
+    combined_hash = {}
+    generate_combined_hash(merchant_invoice_hash, combined_hash)
+    sorted_by_revenue = combined_hash.sort_by(&:last)
+    results = []
+    generate_results(x, sorted_by_revenue, results)
+    parse_results(results)
+  end
+
+  def get_merchant_ids
+    @se.call_merchants.map do |merchant|
       merchant.id
     end
-    merchant_invoice_hash = {}
+  end
+
+  def create_merchant_invoice_hash(merchant_ids, merchant_invoice_hash)
     merchant_ids.each do |merchant_id|
       merchant_invoice_hash[merchant_id] =
       @se.invoices.find_all_by_merchant_id(merchant_id)
     end
-    new_hash = {}
+  end
+
+  def generate_combined_hash(merchant_invoice_hash, combined_hash)
     merchant_invoice_hash.each do |merchant_id, invoice_array|
-      new_hash[merchant_id] = hash_converter(invoice_array)
+      combined_hash[merchant_id] = hash_converter(invoice_array)
     end
-    new_array = new_hash.sort_by(&:last)
-    results = []
+  end
+
+  def generate_results(x, sorted_by_revenue, results)
     counter = x
     while counter > 0
-      results << new_array.pop
+      results << sorted_by_revenue.pop
       counter -= 1
     end
+  end
+
+  def parse_results(results)
     results.map! do |result|
       @se.merchants.find_by_id(result[0])
     end
@@ -201,25 +221,20 @@ class SalesAnalyst
   end
 
   def merchants_ranked_by_revenue
-    merchant_ids = @se.call_merchants.map do |merchant|
-      merchant.id
-    end
+    merchant_ids = get_merchant_ids
     merchant_invoice_hash = {}
-    merchant_ids.each do |merchant_id|
-      merchant_invoice_hash[merchant_id] =
-      @se.invoices.find_all_by_merchant_id(merchant_id)
-    end
-    new_hash = {}
-    merchant_invoice_hash.each do |merchant_id, invoice_array|
-      new_hash[merchant_id] = hash_converter(invoice_array)
-    end
-    new_array = new_hash.sort_by(&:last)
+    create_merchant_invoice_hash(merchant_ids, merchant_invoice_hash)
+    combined_hash = {}
+    generate_combined_hash(merchant_invoice_hash, combined_hash)
+    sorted_by_revenue = combined_hash.sort_by(&:last)
     results = []
-    while new_array.length > 0
-      results << new_array.pop
-    end
-    results.map! do |result|
-      @se.merchants.find_by_id(result[0])
+    generate_all_merchant_list(sorted_by_revenue, results)
+    parse_results(results)
+  end
+
+  def generate_all_merchant_list(sorted_by_revenue, results)
+    while sorted_by_revenue.length > 0
+      results << sorted_by_revenue.pop
     end
   end
 
@@ -227,7 +242,7 @@ class SalesAnalyst
     invoices = @se.call_invoices.find_all do |invoice|
       !invoice.is_paid_in_full?
     end
-    pending = invoices.map do |invoice|
+    invoices.map do |invoice|
       invoice.merchant
     end.uniq
   end
