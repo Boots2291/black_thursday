@@ -285,16 +285,16 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_knows_what_item_had_the_most_revenue_for_each_merchant
-    se = SalesEngine.from_csv({:items => './data/items_short.csv',
-                               :merchants => './data/merchants_short.csv',
-                               :invoices => './data/invoices_short.csv',
-                               :invoice_items => './data/invoice_items_short.csv',
-                               :transactions => './data/transactions_short.csv',
-                               :customers => './data/customers_short.csv'})
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
     sa = SalesAnalyst.new(se)
 
     target = sa.best_item_for_merchant(12334753)
-    item = se.items.find_by_id(263529264)
+    item = se.items.find_by_id(263409515)
 
     assert_equal item, target
   end
