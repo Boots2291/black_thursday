@@ -8,7 +8,7 @@ class Merchant
   def initialize(id, name, created_at, updated_at, mr)
     @id = id
     @name = name
-    @created_at = created_at
+    @created_at = Time.parse(created_at)
     @updated_at = updated_at
     @mr = mr
   end
