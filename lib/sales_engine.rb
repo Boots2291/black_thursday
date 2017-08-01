@@ -123,6 +123,10 @@ class SalesEngine
     @invoices.invoices
   end
 
+  def call_transactions
+    @transactions.transactions
+  end
+
   def invoices_per_day
     call_invoices.reduce({}) do |days, invoice|
       if days.has_key?(invoice.created_at.strftime('%A'))

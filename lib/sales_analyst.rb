@@ -200,6 +200,50 @@ class SalesAnalyst
     end.sum
   end
 
+  def merchants_ranked_by_revenue
+    merchant_ids = @se.call_merchants.map do |merchant|
+      merchant.id
+    end
+    merchant_invoice_hash = {}
+    merchant_ids.each do |merchant_id|
+      merchant_invoice_hash[merchant_id] =
+      @se.invoices.find_all_by_merchant_id(merchant_id)
+    end
+    new_hash = {}
+    merchant_invoice_hash.each do |merchant_id, invoice_array|
+      new_hash[merchant_id] = hash_converter(invoice_array)
+    end
+    new_array = new_hash.sort_by(&:last)
+    results = []
+    while new_array.length > 0
+      results << new_array.pop
+    end
+    results.map! do |result|
+      @se.merchants.find_by_id(result[0])
+    end
+  end
+
+  def merchants_with_pending_invoices
+    invoices = @se.call_invoices.find_all do |invoice|
+      !invoice.is_paid_in_full?
+    end
+    pending = invoices.map do |invoice|
+      invoice.merchant
+    end.uniq
+  end
+
+  def merchants_with_only_one_item
+    @se.call_merchants.find_all do |merchant|
+      merchant.items.count == 1
+    end
+  end
+
+  def merchants_with_only_one_item_registered_in_month(month)
+    merchants_with_only_one_item.find_all do |merchant|
+      merchant.created_at.strftime('%B') == month
+    end
+  end
+
 end
 
 
