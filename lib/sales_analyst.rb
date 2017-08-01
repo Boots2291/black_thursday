@@ -214,7 +214,8 @@ class SalesAnalyst
 
   def most_sold_item_for_merchant(merchant_id)
     invoices = @se.invoices.find_all_by_merchant_id(merchant_id)
-    invoice_items = iterate_invoices(invoices)
+    valid_invoices = check_transactions(invoices)
+    invoice_items = iterate_invoices(valid_invoices)
     item_ids = get_items_from_array(invoice_items).flatten
     hash = get_hash(item_ids)
     items = get_max(hash)
