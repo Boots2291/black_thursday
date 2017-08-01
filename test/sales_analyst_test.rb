@@ -279,7 +279,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
 
     target = sa.most_sold_item_for_merchant(12334753)
-    item = se.items.find_by_id(263532842)
+    item = se.items.find_by_id(263452797)
 
     assert_equal [item], target
   end
