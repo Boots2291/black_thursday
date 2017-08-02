@@ -147,7 +147,7 @@ class SalesEngineTest < Minitest::Test
     inr = se.invoices
     invoice = inr.all
 
-    assert_equal 13, invoice.length
+    assert_equal 15, invoice.length
     assert_equal Array, invoice.class
   end
 
@@ -394,7 +394,7 @@ class SalesEngineTest < Minitest::Test
 
     target = se.invoices_per_day
     expected = {"Saturday"=>2, "Friday"=>5, "Wednesday"=>1,
-                "Monday"=>3, "Sunday"=>2}
+                "Monday"=>5, "Sunday"=>2}
 
     assert_instance_of Hash, target
     assert_equal expected, target

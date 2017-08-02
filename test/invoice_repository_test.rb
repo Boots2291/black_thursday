@@ -14,7 +14,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
     target = inr.all
 
-    assert_equal 13, target.count
+    assert_equal 15, target.count
     assert_equal Array, target.class
   end
 
@@ -57,7 +57,7 @@ class InvoiceRepositoryTest < Minitest::Test
     target = inr.find_all_by_status(:returned)
     target_2 = inr.find_all_by_status("nil")
 
-    assert_equal 1, target.count
+    assert_equal 3, target.count
     assert_equal Array, target.class
     assert_equal [], target_2
   end

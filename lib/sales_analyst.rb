@@ -2,6 +2,7 @@ require_relative 'sales_engine'
 require_relative 'calculator'
 require_relative 'merchant_analyzer'
 require_relative 'merchant_analyzer_helper'
+require_relative 'returned_item_analyzer'
 
 class SalesAnalyst
 
@@ -9,6 +10,7 @@ class SalesAnalyst
   include Calculator
   include MerchantAnalyzer
   include MerchantAnalyzerHelper
+  include ReturnedItemAnalyzer
 
   def initialize(se)
     @se = se

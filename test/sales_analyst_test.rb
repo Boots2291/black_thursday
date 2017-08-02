@@ -143,7 +143,7 @@ class SalesAnalystTest < Minitest::Test
 
     target = sa.average_invoices_per_merchant
 
-    assert_equal 1.0, target
+    assert_equal 1.15, target
   end
 
   def test_for_average_invoices_per_merchant_standard_deviation
@@ -201,7 +201,7 @@ class SalesAnalystTest < Minitest::Test
 
     target = sa.top_days_by_invoice_count
 
-    assert_equal ["Friday"], target
+    assert_equal ["Friday", "Monday"], target
   end
 
   def test_it_can_return_invoice_status
@@ -353,6 +353,22 @@ class SalesAnalystTest < Minitest::Test
 
     target = sa.best_item_for_merchant(12334753)
     item = se.items.find_by_id(263409515)
+
+    assert_equal item, target
+  end
+
+  def test_it_knows_what_customer_returned_the_most_items
+    skip
+    se = SalesEngine.from_csv({:items => './data/items_short.csv',
+                               :merchants => './data/merchants_short.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items_short.csv',
+                               :transactions => './data/transactions_short.csv',
+                               :customers => './data/customers_short.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.returned_most_items
+    merchant = se.merchants.find_by_id(263409515)
 
     assert_equal item, target
   end
