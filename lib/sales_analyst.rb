@@ -121,4 +121,7 @@ class SalesAnalyst
     ((@se.invoices_by_status[status].to_f / total_invoices) * 100.0).round(2)
   end
 
+  #analytics on returned items, which customer returned the most items
+  #which item was returned the most, which merchant had the most returned items,
+  #which merchant had the most returned revenue
 end
