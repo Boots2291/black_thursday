@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Merchant Summary Report</h1>
+    <% require ./lib/sales_engine %>
+    <h3><%= se.fetch_merchant_name(12334141) %></h3>
+    <% end %>
+    <table style="width:50%">
+      <tr>
+        <th>Most Sold Item</th>
+        <th>Total Revenue</th>
+        <th>Top Revenue Generating Item</th>
+      </tr>
+      <tr>
+        <td style="text-align:center">Jill</td>
+        <td style="text-align:center">Smith</td>
+        <td style="text-align:center">50</td>
+      </tr>
+    </table>
+  </body>
+</html>

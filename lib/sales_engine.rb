@@ -32,6 +32,10 @@ class SalesEngine
     pass_merchant_id(merchant_id)
   end
 
+  def fetch_merchant_name(merchant_id)
+    merchants.find_by_id(merchant_id)
+  end
+
   def pass_merchant_id(merchant_id)
     @items.find_all_by_merchant_id(merchant_id)
   end
