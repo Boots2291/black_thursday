@@ -1,6 +1,5 @@
 require_relative 'transaction'
 require_relative 'loader'
-require 'pry'
 
 class TransactionRepository
 

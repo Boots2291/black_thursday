@@ -1,6 +1,5 @@
 require_relative 'item'
 require_relative 'loader'
-require 'pry'
 
 class ItemRepository
 

@@ -1,6 +1,5 @@
 require './test/test_helper'
 require './lib/sales_engine.rb'
-require 'pry'
 
 class SalesEngineTest < Minitest::Test
 

@@ -1,6 +1,5 @@
 require_relative 'merchant'
 require_relative 'loader'
-require 'pry'
 
 class MerchantRepository
 

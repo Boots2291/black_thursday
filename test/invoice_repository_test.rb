@@ -1,6 +1,5 @@
 require './test/test_helper'
 require './lib/invoice_repository.rb'
-require 'pry'
 
 class InvoiceRepositoryTest < Minitest::Test
 
