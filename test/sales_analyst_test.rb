@@ -373,4 +373,18 @@ class SalesAnalystTest < Minitest::Test
     assert_equal item, target
   end
 
+  def test_it_returns_all_merchants_with_returned_invoices
+    se = SalesEngine.from_csv({:items => './data/items.csv',
+                               :merchants => './data/merchants.csv',
+                               :invoices => './data/invoices_short.csv',
+                               :invoice_items => './data/invoice_items.csv',
+                               :transactions => './data/transactions.csv',
+                               :customers => './data/customers.csv'})
+    sa = SalesAnalyst.new(se)
+
+    target = sa.merchants_with_returned_invoices
+
+    assert_equal 1, target.length
+  end
+
 end
