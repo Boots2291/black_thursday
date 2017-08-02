@@ -367,7 +367,7 @@ class SalesAnalystTest < Minitest::Test
                                :customers => './data/customers_short.csv'})
     sa = SalesAnalyst.new(se)
 
-    target = sa.returned_most_items
+    target = sa.who_returned_most_items
     merchant = se.merchants.find_by_id(263409515)
 
     assert_equal item, target
