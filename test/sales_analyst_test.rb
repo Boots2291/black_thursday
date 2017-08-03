@@ -357,20 +357,4 @@ class SalesAnalystTest < Minitest::Test
     assert_equal item, target
   end
 
-  def test_it_knows_what_customer_returned_the_most_items
-    skip
-    se = SalesEngine.from_csv({:items => './data/items_short.csv',
-                               :merchants => './data/merchants_short.csv',
-                               :invoices => './data/invoices_short.csv',
-                               :invoice_items => './data/invoice_items_short.csv',
-                               :transactions => './data/transactions_short.csv',
-                               :customers => './data/customers_short.csv'})
-    sa = SalesAnalyst.new(se)
-
-    target = sa.who_returned_most_items
-    merchant = se.merchants.find_by_id(263409515)
-
-    assert_equal item, target
-  end
-
 end
